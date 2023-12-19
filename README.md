@@ -202,3 +202,27 @@ iptables -A INPUT -p udp -j DROP
 iptables -A INPUT -p tcp ! --dport 8080 -j DROP
 iptables -A INPUT -p tcp -j DROP
 ```
+
+### Soal 3
+```
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
+```
+
+### Soal 4
+```
+iptables -A INPUT -p tcp --dport 22 -m iprange --src-range 10.21.8.3-10.21.10.5 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j DROP
+```
+
+### Soal 5
+```
+iptables -A INPUT -p tcp --dport 80 -m time --timestart 08:00 --timestop 16:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j DROP
+```
+
+### Soal 6
+```
+iptables -A INPUT -p tcp --dport 80 -m time --timestart 12:00 --timestop 13:00 --weekdays Mon,Tue,Wed,Thu -j DROP
+iptables -A INPUT -p tcp --dport 80 -m time --timestart 11:00 --timestop 13:00 --weekdays Fri -j DROP
+```
